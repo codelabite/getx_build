@@ -1,0 +1,103 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:getx/controllerModel.dart';
+
+void main(){
+  runApp(app());
+}
+
+class app extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: Colors.green,
+        accentColor: Colors.redAccent
+      ),
+      home: myHome(),
+    );
+  }
+}
+
+class myHome extends StatefulWidget {
+  @override
+  _myHomeState createState() => _myHomeState();
+}
+
+class _myHomeState extends State<myHome> {
+  final Observeable observeable = Get.put(Observeable());
+
+  int count = 0;
+  void incrementalCounter(){
+    setState(() {
+      count++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('State Management'),
+        centerTitle: false,
+
+      ),
+      body: Center(
+        child: Column(
+
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GetBuilder<Observeable>(builder: (_){
+              return Text( "${_.counter}");
+            }),
+            Text("State Management Practice",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 22
+            ),),
+          SizedBox(
+            height: 10,
+          ),
+          Text('Observing Count Method'),
+            SizedBox(
+              height: 10,
+            ),
+            Text('${count}', style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 30
+            ),),
+            FlatButton(
+                color: Colors.redAccent,
+                textColor: Colors.white,
+                onPressed: (){
+                  observeable.increse();
+                  print('Press me!');
+            }, child: Text("Press it",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15
+            ),)),
+
+SizedBox(
+  height: 10
+),
+            FlatButton(
+                color: Colors.blue,
+                textColor: Colors.white,
+                onPressed: (){
+                  incrementalCounter();
+                  print('Press me!');
+                }, child: Text("Press it",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15
+              ),))
+          ],
+        ),
+      )
+      ,
+    );
+  }
+}
+
